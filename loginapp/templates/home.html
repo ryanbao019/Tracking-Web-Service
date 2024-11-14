@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COVID Contact Tracing & Services</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="min-h-screen bg-gray-50">
+      <!-- Navigation Bar -->
+      <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <h1 class="text-2xl font-bold">COVID Contact Tracing & Services</h1>
+          <div class="space-x-6">
+            <a href="/" class="hover:underline">Home</a>
+            <a href="{% url 'login' %}" class="hover:underline">Login</a>
+            <a href="{% url 'register' %}" class="hover:underline">Register</a>
+            <!-- a href="{% url 'service_home' %}">Services</a-->
+            <!-- a href="/services" class="hover:underline">Services</a-->
+            <a href="/contact" class="hover:underline">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="container mx-auto mt-8 p-4">
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Stay Safe, Stay Connected</h2>
+          <p class="text-gray-600 mb-6">
+            Protect yourself and your community with our integrated COVID-19
+            services.
+          </p>
+          <button
+            class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300"
+          >
+            Get Started
+          </button>
+        </section>
+
+        <!-- Login and Register Prompt -->
+        <section class="text-center mt-8">
+          <p class="text-lg">
+            Already have an account?
+            <a href="{% url 'login' %}" class="text-blue-500 hover:underline"
+              >Login</a
+            >
+          </p>
+          <p class="text-lg">
+            No account?
+            <a href="{% url 'register' %}" class="text-blue-500 hover:underline"
+              >Register</a
+            >
+          </p>
+        </section>
+
+        <!-- Features Grid -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold mb-4">Contact Tracing</h3>
+            <p class="text-gray-600 mb-4">
+              Stay informed about potential COVID-19 exposures with our
+              easy-to-use contact tracing app.
+            </p>
+            <a href="/services#tracing" class="text-blue-500 hover:underline"
+              >Learn more about contact tracing</a
+            >
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold mb-4">Home Services</h3>
+            <p class="text-gray-600 mb-4">
+              Access essential services from the safety of your home, including
+              cleaning, grocery delivery, and more.
+            </p>
+            <a href="/services#home" class="text-blue-500 hover:underline"
+              >Explore our home services</a
+            >
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <section class="bg-blue-100 p-8 rounded-lg text-center mb-12">
+          <h2 class="text-2xl font-bold mb-4">
+            Ready to protect yourself and your community?
+          </h2>
+          <p class="mb-6">
+            Download our app and start using our services today.
+          </p>
+          <button
+            class="bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300"
+          >
+            Download Now
+          </button>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-gray-100 py-8">
+        <div class="container mx-auto text-center">
+          <p class="text-gray-600">
+            © 2024 COVID Contact Tracing & Home Services. All rights reserved.
+          </p>
+          <div class="mt-4 space-x-4">
+            <a href="/privacy" class="text-blue-500 hover:underline"
+              >Privacy Policy</a
+            >
+            <a href="/terms" class="text-blue-500 hover:underline"
+              >Terms of Service</a
+            >
+            <a href="/faq" class="text-blue-500 hover:underline">FAQ</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
