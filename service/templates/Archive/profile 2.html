@@ -1,0 +1,90 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+
+    <form id="profileForm">
+        <!-- Name Field -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="Username" readonly><br><br>
+
+        <!-- Gender Field -->
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" disabled>
+            <option value="NA" selected>NA</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select><br><br>
+
+        <!-- Living Place Field -->
+        <label for="living_place">Living Place:</label>
+        <select id="living_place" name="living_place" disabled>
+            <option selected>Adelaide City</option>
+            <option>Adelaide City North of Wakefield st, East of KingWilliam St</option>
+            <option>Adelaide City South of Wakefield st, East of Kingwilliam St</option>
+            <option>Adelaide City North of Grote St, West of KingWilliam</option>
+            <option>Adelaide City South of Grote St, West of KingWilliam</option>
+            <option>North Adelaide</option>
+            <option>Unley</option>
+            <option>Parkside</option>
+            <option>Unley</option>
+            <option>Dulwich</option>
+            <option>Rose Park</option>
+            <option>Norwood</option>
+            <option>St Peters</option>
+            <option>Gilberton</option>
+            <option>Medindie</option>
+            <option>Thorngate</option>
+            <option>Fitzroy</option>
+            <option>Ovingham</option>
+            <option>Thrbarton</option>
+            <option>Mile End</option>
+            <option>Keswick</option>
+            <option>Wayville</option>
+        </select><br><br>
+
+        <!-- Personal Description Field -->
+        <label for="description">Personal Description:</label><br>
+        <textarea id="description" name="description" maxlength="250" disabled>This person is lazy, left nothing here.</textarea><br><br>
+
+        <!-- Buttons -->
+        <button type="button" id="editButton" onclick="enableEditing()">Change</button>
+        <button type="button" id="saveButton" onclick="saveProfile()" style="display:none;">Save</button>
+        <button type="button" onclick="cancelChanges()">Quit</button>
+    </form>
+
+    <a href="{% url 'service_home' %}">Back to Services HomePage</a>
+
+    <script>
+        function enableEditing() {
+            document.getElementById("name").readOnly = false;
+            document.getElementById("gender").disabled = false;
+            document.getElementById("living_place").disabled = false;
+            document.getElementById("description").disabled = false;
+            document.getElementById("editButton").style.display = "none";
+            document.getElementById("saveButton").style.display = "inline";
+        }
+
+        function saveProfile() {
+            // Logic to save the profile
+            alert("Profile saved!");
+            document.getElementById("profileForm").submit();
+        }
+
+        function cancelChanges() {
+            if (confirm("Do you want to quit? All changes will not be saved.")) {
+                window.location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
+
+<a href="{% url 'service_home' %}">Back to Services HomePage</a>
+

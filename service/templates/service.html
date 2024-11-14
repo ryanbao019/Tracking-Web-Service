@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Our Services</h1>
+
+    <div class="mb-4">
+        <h2 class="h4 mb-3">Welcome, {{ profile.user.username }}!</h2>
+        <div class="list-group mb-4">
+            <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">Profile</a>
+            <a href="{% url 'online_service' %}" class="list-group-item list-group-item-action">Online Service</a>
+            <a href="{% url 'ask_doctor' %}" class="list-group-item list-group-item-action">Consulting Service</a>
+            <a href="{% url 'map_service' %}" class="list-group-item list-group-item-action">Map Service</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title h5">Profile</h2>
+                    <p class="card-text">Manage your account, track your activities, and customize your experience with our <a href="{% url 'profile' %}">Profile</a> service. Keep your personal information safe and easily accessible.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title h5">Online Service</h2>
+                    <p class="card-text">If you're looking to order food or consult a doctor from the comfort of your home, you can enjoy our <a href="{% url 'online_service' %}">Online Service</a> here. From groceries to healthcare, we've got you covered with reliable and fast support!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title h5">Consulting Service</h2>
+                    <p class="card-text">If you'd like to talk to a doctor about any concern, <a href="{% url 'ask_doctor' %}">Online Consulting Service</a> could help you with this. All doctors are qualified, and all your information is safe with us.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title h5">Map Service</h2>
+                    <p class="card-text">Concerned about your safety in these challenging times? Use our <a href="{% url 'map_service' %}">Map Service</a> to check for COVID-free zones and ensure you're keeping a safe distance. We prioritize your well-being!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

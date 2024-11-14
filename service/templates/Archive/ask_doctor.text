@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="chat-container">
+    <h2>Chat with a Doctor</h2>
+    <div class="chat-box" id="chat-box">
+        <!-- Messages will be displayed here -->
+    </div>
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div class="mt-3 text-center">
+        <a href="{% url 'service_home' %}" class="btn btn-outline-primary">Back to Services Home</a>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+    .chat-container {
+        width: 100%;
+        max-width: 600px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+        margin: 2rem auto;
+    }
+    .chat-box {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        max-height: 60vh;
+    }
+    .message {
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 4px;
+    }
+    .user-message {
+        background-color: #e6f7ff;
+        text-align: right;
+    }
+    .doctor-message {
+        background-color: #f1f1f1;
+        text-align: left;
+    }
+    .chat-input {
+        display: flex;
+        margin-bottom: 1rem;
+    }
+    .chat-input input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+    }
+    .chat-input button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+    .chat-input button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input');
+        const message = userInput.value.trim();
+
+        if (message === '') {
+            return;
+        }
+
+        // Display user message
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('message', 'user-message');
+        userMessage.innerText = message;
+        chatBox.appendChild(userMessage);
+
+        // Clear input
+        userInput.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Simulate doctor response
+        setTimeout(() => {
+            const doctorMessage = document.createElement('div');
+            doctorMessage.classList.add('message', 'doctor-message');
+            doctorMessage.innerText = getDoctorResponse(message);
+            chatBox.appendChild(doctorMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+    }
+
+    // Sample responses based on keywords
+    function getDoctorResponse(message) {
+        message = message.toLowerCase();
+        if (message.includes('covid') || message.includes('symptoms')) {
+            return "If you're experiencing COVID symptoms, please isolate yourself and get tested as soon as possible.";
+        } else if (message.includes('fever') || message.includes('cough')) {
+            return "A fever and cough may be symptoms of COVID-19 or another illness. It's best to monitor your symptoms closely.";
+        } else if (message.includes('hello') || message.includes('hi')) {
+            return "Thank you for reaching out. How can I help you with your health concerns today?";
+        } else {
+            return "The doctor currently is not available, if not an emergency please leave your message, otherwise call 000. Have a good day!";
+        }
+    }
+
+    // Add event listener for Enter key
+    document.getElementById('user-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+{% endblock %}

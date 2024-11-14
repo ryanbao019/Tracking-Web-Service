@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card chat-container">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h4 mb-0">Chat with a Doctor</h2>
+        </div>
+        <div class="card-body p-0">
+            <div class="chat-box" id="chat-box">
+                <!-- Initial greeting message -->
+                <div class="message doctor-message">
+                    Hello! I'm Dr. Assistant. How can I help you today? For emergencies, please call 000 immediately.
+                </div>
+            </div>
+            <div class="chat-input p-3">
+                <input type="text" id="user-input" class="form-control" placeholder="Type your message here..." autocomplete="off">
+                <button onclick="sendMessage()" class="btn btn-primary ms-2">Send</button>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'service_home' %}" class="btn btn-outline-primary">Back to Services Home</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .chat-container {
+        max-width: 800px;
+        margin: 0 auto;
+        height: 80vh;
+    }
+    .chat-box {
+        height: calc(80vh - 180px);
+        overflow-y: auto;
+        padding: 1rem;
+        background-color: #f8f9fa;
+    }
+    .message {
+        padding: 10px 15px;
+        margin: 5px 0;
+        border-radius: 15px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+        border-bottom-right-radius: 5px;
+    }
+    .doctor-message {
+        background-color: #e9ecef;
+        color: #212529;
+        margin-right: auto;
+        border-bottom-left-radius: 5px;
+    }
+    .chat-input {
+        display: flex;
+        gap: 10px;
+        background-color: #fff;
+        border-top: 1px solid #dee2e6;
+    }
+    .symptom-list {
+        padding-left: 20px;
+        margin: 5px 0;
+    }
+</style>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input');
+        const message = userInput.value.trim();
+
+        if (message === '') {
+            return;
+        }
+
+        // Display user message
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('message', 'user-message');
+        userMessage.innerText = message;
+        chatBox.appendChild(userMessage);
+
+        // Clear input
+        userInput.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Simulate doctor response with delay
+        setTimeout(() => {
+            const doctorMessage = document.createElement('div');
+            doctorMessage.classList.add('message', 'doctor-message');
+
+            // Get and format the response
+            let response = getDoctorResponse(message);
+            // Replace bullet points with proper HTML formatting
+            response = response.replace(/•\s/g, '\n• ');
+            doctorMessage.innerText = response;
+
+            chatBox.appendChild(doctorMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+    }
+
+    function getDoctorResponse(message) {
+        message = message.toLowerCase();
+
+        // COVID-related queries
+        if (message.includes('covid') || message.includes('coronavirus')) {
+            if (message.includes('symptoms')) {
+                return `Common COVID-19 symptoms include:
+• Fever or chills
+• Cough
+• Shortness of breath
+• Fatigue
+• Loss of taste or smell
+
+Please isolate yourself and get tested if you experience these symptoms.`;
+            }
+            if (message.includes('test') || message.includes('testing')) {
+                return "You can get a COVID-19 test at any testing center. Make sure to isolate yourself until you receive your results.";
+            }
+            return "If you're concerned about COVID-19, please monitor for symptoms and follow local health guidelines. Would you like to know about specific symptoms?";
+        }
+
+        // General symptoms
+        if (message.includes('fever')) {
+            return "A fever might indicate various conditions. If your temperature is above 39°C (102.2°F) or persists for more than three days, please seek medical attention. Would you like advice on managing fever symptoms?";
+        }
+        if (message.includes('cough')) {
+            return "If you're experiencing a persistent cough, especially with other symptoms, it's important to monitor its progression. Is it a dry cough or productive cough? This information can help determine the cause.";
+        }
+        if (message.includes('headache')) {
+            return "Headaches can be caused by various factors including stress, dehydration, or underlying conditions. Are you experiencing any other symptoms with your headache?";
+        }
+
+        // Emergency situations
+        if (message.includes('emergency') || message.includes('urgent') || message.includes('severe')) {
+            return "⚠️ If you're experiencing a medical emergency, please call 000 immediately. Don't wait for an online response.";
+        }
+
+        // General greetings
+        if (message.includes('hello') || message.includes('hi')) {
+            return "Hello! I'm here to help provide general health information. What health concerns would you like to discuss?";
+        }
+        if (message.includes('thanks') || message.includes('thank')) {
+            return "You're welcome! Is there anything else you'd like to know about?";
+        }
+
+        // Default response
+        return "I can provide general health information, but for specific medical advice, please consult with a healthcare provider in person. If it's an emergency, call 000. What health topic would you like to learn more about?";
+    }
+
+    // Add event listener for Enter key
+    document.getElementById('user-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+{% endblock %}

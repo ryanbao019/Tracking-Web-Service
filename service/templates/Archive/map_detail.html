@@ -1,0 +1,31 @@
+<h1>Map Detail</h1>
+
+<p>Map displaying COVID risk areas:</p>
+<div id="map">
+    <!-- Map rendering (could use an embedded map, placeholder for simplicity) -->
+    <p>Default COVID-affected areas:</p>
+    <ul>
+        {% for area in covid_areas %}
+            <li>{{ area }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<button onclick="location.reload()">Update Map</button>
+
+{% if locations %}
+    <p>Your selected locations in the past three days:</p>
+    <ul>
+        {% for location in locations %}
+            <li>{{ location }}</li>
+        {% endfor %}
+    </ul>
+    {% if is_at_risk %}
+        <p>Do you need to contact a doctor? <a href="{% url 'ask_doctor' %}">Click here</a></p>
+    {% else %}
+        <p>You are currently safe from COVID.</p>
+    {% endif %}
+{% else %}
+    <p>This is the data, help yourself with.</p>
+{% endif %}
+

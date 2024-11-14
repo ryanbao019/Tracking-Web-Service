@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h4 mb-0">Profile</h2>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm" method="POST" action="{% url 'profile' %}">
+                        {% csrf_token %}
+                        
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ profile.user.username }}" readonly>
+                        </div>
+
+                        <!-- Gender Field -->
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Gender:</label>
+                            <select class="form-select" id="gender" name="gender" disabled>
+                                <option value="NA" {% if profile.gender == 'NA' %}selected{% endif %}>NA</option>
+                                <option value="male" {% if profile.gender == 'male' %}selected{% endif %}>Male</option>
+                                <option value="female" {% if profile.gender == 'female' %}selected{% endif %}>Female</option>
+                            </select>
+                        </div>
+
+                        <!-- Living Place Field -->
+                        <div class="mb-3">
+                            <label for="living_place" class="form-label">Living Place:</label>
+                            <select class="form-select" id="living_place" name="living_place" disabled>
+                                <option {% if profile.living_place == 'Adelaide City' %}selected{% endif %}>Adelaide City</option>
+                                <option {% if profile.living_place == 'Adelaide City North of Wakefield st, East of KingWilliam St' %}selected{% endif %}>Adelaide City North of Wakefield st, East of KingWilliam St</option>
+                                <option {% if profile.living_place == 'Adelaide City South of Wakefield st, East of Kingwilliam St' %}selected{% endif %}>Adelaide City South of Wakefield st, East of Kingwilliam St</option>
+                                <option {% if profile.living_place == 'Adelaide City North of Grote St, West of KingWilliam' %}selected{% endif %}>Adelaide City North of Grote St, West of KingWilliam</option>
+                                <option {% if profile.living_place == 'Adelaide City South of Grote St, West of KingWilliam' %}selected{% endif %}>Adelaide City South of Grote St, West of KingWilliam</option>
+                                <option {% if profile.living_place == 'North Adelaide' %}selected{% endif %}>North Adelaide</option>
+                                <option {% if profile.living_place == 'Unley' %}selected{% endif %}>Unley</option>
+                                <option {% if profile.living_place == 'Parkside' %}selected{% endif %}>Parkside</option>
+                                <option {% if profile.living_place == 'Dulwich' %}selected{% endif %}>Dulwich</option>
+                                <option {% if profile.living_place == 'Rose Park' %}selected{% endif %}>Rose Park</option>
+                                <option {% if profile.living_place == 'Norwood' %}selected{% endif %}>Norwood</option>
+                                <option {% if profile.living_place == 'St Peters' %}selected{% endif %}>St Peters</option>
+                                <option {% if profile.living_place == 'Gilberton' %}selected{% endif %}>Gilberton</option>
+                                <option {% if profile.living_place == 'Medindie' %}selected{% endif %}>Medindie</option>
+                                <option {% if profile.living_place == 'Thorngate' %}selected{% endif %}>Thorngate</option>
+                                <option {% if profile.living_place == 'Fitzroy' %}selected{% endif %}>Fitzroy</option>
+                                <option {% if profile.living_place == 'Ovingham' %}selected{% endif %}>Ovingham</option>
+                                <option {% if profile.living_place == 'Thrbarton' %}selected{% endif %}>Thrbarton</option>
+                                <option {% if profile.living_place == 'Mile End' %}selected{% endif %}>Mile End</option>
+                                <option {% if profile.living_place == 'Keswick' %}selected{% endif %}>Keswick</option>
+                                <option {% if profile.living_place == 'Wayville' %}selected{% endif %}>Wayville</option>
+                            </select>
+                        </div>
+
+                        <!-- Personal Description Field -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Personal Description:</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" maxlength="250" disabled>{{ profile.description }}</textarea>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2">
+                            <button type="button" id="editButton" class="btn btn-primary" onclick="enableEditing()">Change</button>
+                            <button type="button" id="saveButton" class="btn btn-success" onclick="saveProfile()" style="display:none;">Save</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelChanges()">Quit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'service_home' %}" class="btn btn-outline-primary">Back to Services Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function enableEditing() {
+        document.getElementById("name").readOnly = false;
+        document.getElementById("gender").disabled = false;
+        document.getElementById("living_place").disabled = false;
+        document.getElementById("description").disabled = false;
+        document.getElementById("editButton").style.display = "none";
+        document.getElementById("saveButton").style.display = "inline";
+    }
+
+    function saveProfile() {
+        if (confirm("Are you sure you want to save these changes?")) {
+            document.getElementById("profileForm").submit();
+        }
+    }
+
+    function cancelChanges() {
+        if (confirm("Do you want to quit? All changes will not be saved.")) {
+            window.location.href = "{% url 'service_home' %}";
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>COVID-19 Map Service</h2>
+    <p class="lead">Stay safe with our COVID-19 Map Service. Track safe zones, avoid exposure, and keep yourself and your loved ones healthy.</p>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3>Welcome, {{ user.username }}!</h3>
+            <p>Please select the locations you've visited in the past three days:</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div id="location-container">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <select name="location" class="form-select" required>
+                                <option value="">Select Location</option>
+                                {% for location in available_locations %}
+                                    <option value="{{ location }}">{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="button" class="btn btn-secondary" onclick="addLocationField()">+ Add Another Location</button>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Check Risk Level</button>
+                </div>
+            </form>
+
+            <div class="mt-4">
+                <p>If you prefer not to share your locations, you can still
+                    <a href="{% url 'map_detail' %}?clear_session=true">view the current COVID risk map</a>
+                    and consult with a doctor if needed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="{% url 'service_home' %}" class="btn btn-outline-secondary">Back to Services Home</a>
+    </div>
+</div>
+
+<script>
+function addLocationField() {
+    const container = document.getElementById('location-container');
+    const newRow = document.createElement('div');
+    newRow.className = 'row mb-3';
+    newRow.innerHTML = `
+        <div class="col-md-4">
+            <select name="location" class="form-select" required>
+                <option value="">Select Location</option>
+                {% for location in available_locations %}
+                    <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    container.appendChild(newRow);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+<h2>Map Service</h2>
+<p>Stay safe with our COVID-19 Map Service. Track safe zones, avoid exposure, and keep yourself and your loved ones healthy.</p>
+<a href="{% url 'service_home' %}">Back to Services HomePage</a>
+
+<h1>Map Service</h1>
+<p>Welcome, {{ user.username }}!</p>
+
+<p>Where you have been in the past three days:</p>
+
+<form method="post" action="{% url 'map_service' %}">
+    {% csrf_token %}
+    <div id="location-container">
+        <div class="location-line">
+            <select name="location">
+                <option value="Adelaide City">Adelaide City</option>
+                <option value="Unley">Unley</option>
+                <option value="St Peters">St Peters</option>
+                <option value="Parkside">Parkside</option>
+                <option value="Norwood">Norwood</option>
+                <option value="Rose Park">Rose Park</option>
+                <option value="Wayville">Wayville</option>
+                <option value="Dulwich">Dulwich</option>
+                <option value="North Adelaide">North Adelaide</option>
+            </select>
+            <button type="button" onclick="addLine()">+</button>
+        </div>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+<p>If you do not want to reveal personal info and check the map, <a href="{% url 'map_detail' %}">click here</a>.</p>
+
+<script>
+    function addLine() {
+        const container = document.getElementById('location-container');
+        const newLine = document.createElement('div');
+        newLine.className = 'location-line';
+        newLine.innerHTML = `
+            <select name="location">
+                <option value="Adelaide City">Adelaide City</option>
+                <option value="Unley">Unley</option>
+                <option value="St Peters">St Peters</option>
+            </select>
+            <button type="button" onclick="removeLine(this)">-</button>
+        `;
+        container.appendChild(newLine);
+    }
+
+    function removeLine(button) {
+        const line = button.parentNode;
+        line.remove();
+    }
+</script>
