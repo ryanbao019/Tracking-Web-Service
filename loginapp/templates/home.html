@@ -5,14 +5,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COVID Contact Tracing & Services</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      #hero-text {
+        border-right: 3px solid;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 2s steps(40), cursor 0.5s step-end infinite;
+      }
+      @keyframes cursor {
+        50% { border-color: transparent }
+      }
+      @keyframes typing {
+        from { width: 0 }
+      }
+      /* Card Wrapper */
+      .card-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem; /* Matches Tailwind's `rounded-2xl` */
+        background: white;
+      }
+
+      /* Gradient */
+      .card-wrapper::before {
+        background: conic-gradient(
+          rgba(37, 99, 235) 0deg, /* blue-600 with 40% opacity */
+          rgba(37, 99, 235) 40deg,
+          transparent 80deg
+        );
+        position: absolute;
+        left: -50%; /* Adjusted for rectangular aspect */
+        top: -50%;  /* Adjusted for rectangular aspect */
+        height: 200%; /* Ensures full coverage of the rectangle's height */
+        width: 200%; /* Ensures full coverage of the rectangle's width */
+        animation: border-spin-rect 6s linear infinite; /* Custom timing for smoother spin */
+        content: '';
+        transform-origin: center; /* Ensures rotation happens from the center */
+      }
+
+      /* Body */
+      .card-content {
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        height: calc(100% - 2px);
+        width: calc(100% - 2px);
+        border-radius: 0.5rem; /* Matches the wrapper for a consistent look */
+        background: white;
+        z-index: 1; /* Ensures the body content is above the gradient */
+      }
+
+      /* Animation */
+      @keyframes border-spin-rect {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      /* Base Fade Content (Shared Styles) */
+      .fade-content {
+        opacity: 0;
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      /* Fade-In Animation from Left */
+      .fade-from-left {
+        transform: translateX(-30px); /* Start slightly left */
+      }
+
+      .fade-from-left.fade-in {
+        opacity: 1;
+        transform: translateX(0); /* Reset to original position */
+      }
+
+      /* Fade-In Animation from Right */
+      .fade-from-right {
+        transform: translateX(30px); /* Start slightly right */
+      }
+
+      .fade-from-right.fade-in {
+        opacity: 1;
+        transform: translateX(0); /* Reset to original position */
+      }
+    </style>
   </head>
   <body>
     <div class="min-h-screen bg-gray-50">
       <!-- Navigation Bar -->
       <nav class="bg-blue-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
-          <h1 class="text-2xl font-bold">COVID Contact Tracing & Services</h1>
+          <h1 class="text-2xl font-bold">WellTogether</h1>
           <div class="space-x-6">
             <a href="/" class="hover:underline">Home</a>
             <a href="{% url 'login' %}" class="hover:underline">Login</a>
@@ -25,23 +112,38 @@
       </nav>
 
       <!-- Main Content -->
-      <main class="container mx-auto mt-8 p-4">
+      <main class="">
         <!-- Hero Section -->
-        <section class="text-center mb-12">
-          <h2 class="text-3xl font-bold mb-4">Stay Safe, Stay Connected</h2>
-          <p class="text-gray-600 mb-6">
-            Protect yourself and your community with our integrated COVID-19
-            services.
-          </p>
-          <button
-            class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300"
-          >
-            Get Started
-          </button>
+        <section class="relative h-[70vh] flex flex-col justify-center items-center w-screen overflow-hidden">
+          <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0 brightness-75">
+            <source src="https://videos.pexels.com/video-files/4169766/4169766-uhd_2560_1440_25fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="z-10 text-white text-center">
+            <div class="container">
+              <h2 class="text-6xl font-bold mb-4 pr-2" id="hero-text">Stay Safe, Stay Connected</h2>
+            </div>
+            <p class="text-gray-600 mb-6">
+              Protect yourself and your community with our integrated COVID-19
+              services.
+            </p>
+            <div class="flex flex-col justify-center items-center">
+              <button
+                class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300"
+              >
+                <a href="{% url 'login' %}">
+                  Get Start
+                </a>
+              </button>
+              <a href="{% url 'register' %}" class="text-blue-500 hover:underline"
+              >Create a account</a
+            >
+            </div>
+          </div>
         </section>
 
         <!-- Login and Register Prompt -->
-        <section class="text-center mt-8">
+        <!-- <section class="text-center mt-8">
           <p class="text-lg">
             Already have an account?
             <a href="{% url 'login' %}" class="text-blue-500 hover:underline"
@@ -54,23 +156,25 @@
               >Register</a
             >
           </p>
-        </section>
+        </section> -->
 
         <!-- Features Grid -->
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-          <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold mb-4">Contact Tracing</h3>
-            <p class="text-gray-600 mb-4">
-              Stay informed about potential COVID-19 exposures with our
-              easy-to-use contact tracing app.
-            </p>
-            <a href="/services#tracing" class="text-blue-500 hover:underline"
-              >Learn more about contact tracing</a
-            >
+        <div class="grid md:grid-cols-2 gap-8 my-12 mx-6">
+          <div class="p-6 rounded-lg shadow-md card-wrapper fade-content fade-from-left">
+            <div class="card-content flex flex-col justify-center gap-3 px-4">
+              <h3 class="text-xl font-semibold mb-4">Contact Tracing 📞</h3>
+              <p class="text-gray-600 mb-4">
+                Stay informed about potential COVID-19 exposures with our
+                easy-to-use contact tracing app.
+              </p>
+              <a href="/services#tracing" class="text-blue-500 hover:underline"
+                >Learn more about contact tracing</a
+              >
+            </div>
           </div>
 
-          <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold mb-4">Home Services</h3>
+          <div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-center gap-3 px-4 fade-content fade-from-right">
+            <h3 class="text-xl font-semibold mb-4">Home Services 🏡</h3>
             <p class="text-gray-600 mb-4">
               Access essential services from the safety of your home, including
               cleaning, grocery delivery, and more.
@@ -115,5 +219,39 @@
         </div>
       </footer>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const targets = document.querySelectorAll(".fade-content");
+        const activationScrollLevel = 50; // The scroll level (in pixels) at which animations start
+
+        const initializeObserver = () => {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+                  entry.target.classList.add("fade-in");
+                }
+              });
+            },
+            {
+              threshold: [0.3], // Trigger when 30% of the content is visible
+            }
+          );
+
+          targets.forEach((target) => observer.observe(target));
+        };
+
+        // Start animations after scrolling to the specified level
+        const checkScrollLevel = () => {
+          if (window.scrollY >= activationScrollLevel) {
+            initializeObserver();
+            window.removeEventListener("scroll", checkScrollLevel);
+          }
+        };
+
+        window.addEventListener("scroll", checkScrollLevel);
+      });
+    </script>
   </body>
 </html>
