@@ -42,9 +42,11 @@
                     {% endwith %}
                 {% endfor %}
 
+
                 {% if locations %}
                     {% for location in locations %}
                         {% with loc_name=location|format_image_name %}
+                        
                             <img src="{% static 'maps/marker.png' %}"
                                  alt="You are here"
                                  class="position-absolute"
@@ -56,6 +58,51 @@
                         {% endwith %}
                     {% endfor %}
                 {% endif %}
+
+                {% if locations %}
+                {% for location in locations %}
+                    {% with loc_name=location|format_image_name %}
+                        {% for area in all_areas %}
+                            {% with area_name=area|format_image_name %}
+                                {% if loc_name == area_name %}
+                                    <!-- Render Only the Corresponding Area -->
+                                    <img src="{% if area in covid_areas %}
+                                                  {% static 'maps/red/'|add:area_name|add:'R.png' %}
+                                              {% else %}
+                                                  {% static 'maps/green/'|add:area_name|add:'G.png' %}
+                                              {% endif %}"
+                                         alt="{{ area }}"
+                                         class="position-absolute area animate-picked"
+                                         style="
+                                            --base-scale: {{ area_positions|get_item:area_name|get_item:'scale' }};
+                                            left: {{ area_positions|get_item:area_name|get_item:'x' }}px;
+                                            top: {{ area_positions|get_item:area_name|get_item:'y' }}px;
+                                            transform-origin: top left;
+                                            transform: scale(var(--base-scale));
+                                        ">
+            
+                                    <!-- Marker Representation -->
+                                    <img src="{% static 'maps/marker.png' %}"
+                                         alt="Marker for {{ location }}"
+                                         class="position-absolute marker"
+                                         style="
+                                             left: {{ area_positions|get_item:area_name|get_item:'marker_x' }}px;
+                                             top: {{ area_positions|get_item:area_name|get_item:'marker_y' }}px;
+                                             width: 30px;
+                                             height: 30px;
+                                             z-index: 100;
+                                         ">
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            {% endif %}
+            
+
+
+
+
             </div>
 
             {% if not is_direct_view and locations %}

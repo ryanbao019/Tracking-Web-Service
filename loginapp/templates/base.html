@@ -28,6 +28,27 @@
         .register-body label {
             margin-bottom: .5rem;
         }
+/* Base State */
+.area {
+  transform: scale(var(--base-scale, 1)); /* Use the base scale passed from the template */
+  transform-origin: top left; /* Ensure scaling aligns with the original origin */
+  transition: transform 0.3s ease; /* Smooth transitions if needed */
+}
+
+/* Animation Keyframes */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(calc(var(--base-scale, 1) * 1)); /* Normal size */
+  }
+  50% {
+    transform: scale(calc(var(--base-scale, 1) * 1.015)); /* Enlarged size */
+  }
+}
+
+/* Animated State */
+.animate-picked {
+  animation: pulse 1s infinite; /* Infinite big-small-big animation */
+}
     </style>
 </head>
 <body>

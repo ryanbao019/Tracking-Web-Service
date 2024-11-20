@@ -1,4 +1,376 @@
-<h2>Online Service</h2>
-<p>Welcome to our Online Service! Here, you can order food, consult with a doctor, and access other essential services from the comfort of your home.</p>
-<a href="{% url 'service_home' %}">Back to Services HomePage</a>
+<!-- <h2>Online Service</h2>
+<p>Welcome to our Online Service! Here, you can order food, consult with a doctor, and access other essential services from the comfort of your home.</p> -->
+<!-- <a href="{% url 'service_home' %}">Back to Services HomePage</a> -->
 
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- change title -->
+        <title>Temp Title</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            /* basic setting */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            
+            ul  {
+                list-style-type: none;
+            }
+            
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+            
+            body {
+                font-family: 'Open Sans', sans-serif;
+                font-size: 16px;
+                line-height: 1.6;
+                color: #000;
+                background-color: #fff;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+            
+            /* Home */
+            #home {
+                display: flex;
+                flex-direction: column;  /* Stack header and main vertically */
+                min-height: 100vh;  /* Full viewport height */
+                margin: 0;  /* Remove default margin */
+            }
+            
+            #home-hero {
+                display: flex;
+                position: relative;
+                flex-grow: 1;  /* Make the main expand to fill remaining space */
+                border-radius: 7px;
+                margin: 20px 160px 160px 160px;
+                overflow: hidden;
+            }
+            
+            #home-hero section {
+                display: flex;
+                width: 100%;
+                position: relative;
+                z-index: 10;
+            }
+            
+            #home-map {
+                width: 30%;
+                margin: 180px;
+                border-radius: 7px;
+                z-index: 20;
+            }
+            
+            #home-service{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                /* overflow: hidden; */
+            }
+            
+            .list {
+                position: relative;
+                height: 100%;
+                inset: 0 0 0 0;
+            }
+            
+            .list .item {
+                position: relative;
+                height: 100%;
+                
+            
+            }
+            
+            .list .item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                z-index: -1;
+                /* add some blur */
+                filter: blur(2px);
+                filter: brightness(.5);
+            
+            }
+            
+            .list .item .content {
+                height: 100%;
+                width: 50%;
+                max-width: 600px;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 2em;
+                color: #fff;
+                /* background-color: rgba(0, 0, 0, 0.5); */
+            }
+            
+            .list .content p {
+                line-height: 1.6;
+                max-width: 400px;
+            }
+            
+            .list .content button {
+                width: 150px;
+                padding: 1em 1em;
+                border: none;
+                border-radius: 7px;
+                background-color: rgb(37, 99, 235);
+                color: #fff;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            
+            /* hover background opacity*/
+            .list .content button:hover {
+                background-color: #fff;
+                color: rgba(37, 99, 235);
+            }
+            
+            .thumbnail {
+                position: fixed;
+                bottom: 100px;    /* Adjust based on your desired position */
+                right: 100px;    /* Adjust based on your desired position */
+                width: max-content;
+                z-index: 100;
+                display: flex;
+                gap: 20px;
+            }
+            
+            .thumbnail .item {
+                width: 130px;
+                height: 150px;
+                flex-shrink: 0;
+                position: relative;
+            }
+            
+            /* hover */
+            .thumbnail .item:hover {
+                /* cursor */
+                cursor: pointer;
+            }
+            
+            .thumbnail .item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 7px;
+                filter: brightness(.8);
+            
+                /* transition */
+                transition: transform 0.3s ease;
+            }
+            
+            .thumbnail .item:hover img {
+                transform: scale(1.1);
+            }
+            
+            .thumbnail .item .content {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                color: white;
+            }
+            
+            .thumbnail .item .content .title {
+                font-weight: 400;
+                font-size: .6em;
+            }
+            
+            .list .item:nth-child(1) {
+                z-index: 1;
+            }
+            
+            .list .item:nth-child(1) .title,
+            .list .item:nth-child(1) .topic,
+            .list .item:nth-child(1) .buttons {
+                transform: translateY(50px);
+                filter: blur(20px);
+                opacity: 0;
+                animation: showContent 0.5s 1s linear 1 forwards;
+            }
+            
+            @keyframes showContent {
+                to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+                }
+            }
+            
+            .list .item:nth-child(1) .title {
+                animation-delay: 1.2s;
+            }
+            
+            .list .item:nth-child(1) .topic {
+                animation-delay: 1.3s;
+            }
+            
+            .list .item:nth-child(1) .buttons {
+                animation-delay: 1.35s;
+            }
+            
+            #item1.chosen img{
+                width: 130px;
+                height: 150px;
+                position: absolute;
+                left: 78%;
+                bottom: -10%;
+                border-radius: 7px;
+                animation: showImage 0.5s linear 1 forwards;
+            }
+            
+            #item2.chosen img{
+                width: 130px;
+                height: 150px;
+                position: absolute;
+                left: 83%;
+                bottom: -10%;
+                border-radius: 7px;
+                animation: showImage 0.5s linear 1 forwards;
+            }
+            
+            #item3.chosen img{
+                width: 130px;
+                height: 150px;
+                position: absolute;
+                left: 100%;
+                bottom: -10%;
+                border-radius: 7px;
+                animation: showImage 0.5s linear 1 forwards;
+            }
+            
+            @keyframes showImage {
+                to {
+                width: 100%;
+                height: 100%;
+                left: 0;
+                bottom: 0;
+                }
+            }
+        </style>
+    </head>
+
+    <header class="my-4 text-3xl mx-[160px] flex justify-between font-medium">
+        <h2>
+            Online Service
+        </h2>
+        <button  class="text-2xl transition-transform duration-300 hover:scale-125">
+            <a href="{% url 'service_home' %}">
+                👉
+            </a>
+        </button>
+    </header>
+    <body id="home" class="home-page">
+        <main id="home-hero">
+            <section>
+            <div id="home-map">
+                <img src="https://plus.unsplash.com/premium_photo-1712828731398-ad18ac5a9748?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+            </div>
+            <div id="home-service">
+                <div class="list">
+                <div class="item" id="item1">
+                    <img src="https://images.unsplash.com/photo-1719937050814-72892488f741?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="content">
+                    <h2 class="title">Order Food</h2>
+                    <p class="topic">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula interdum lectus, at condimentum justo sodales sit amet. Integer lacinia, felis quis blandit volutpat, velit sapien posuere velit, sed viverra purus sapien a enim. Vestibulum nisl sem, ornare at augue in, eleifend rhoncus sapien. Vestibulum malesuada tincidunt felis, et facilisis elit. Sed dapibus rutrum condimentum. Ut et ex mattis turpis congue hendrerit. Sed tristique nibh sit amet laoreet viverra.</p >
+                    <button class="buttons">Subscribe</button>
+                    </div>
+                </div>
+                <div class="item" id="item2">
+                    <img src="https://plus.unsplash.com/premium_photo-1682146662576-900a71864a11?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="content">
+                    <h2 class="title">Consult Doctor</h2>
+                    <p class="topic">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula interdum lectus, at condimentum justo sodales sit amet. Integer lacinia, felis quis blandit volutpat, velit sapien posuere velit, sed viverra purus sapien a enim. Vestibulum nisl sem, ornare at augue in, eleifend rhoncus sapien. Vestibulum malesuada tincidunt felis, et facilisis elit. Sed dapibus rutrum condimentum. Ut et ex mattis turpis congue hendrerit. Sed tristique nibh sit amet laoreet viverra.</p >
+                    <button class="buttons">Subscribe</button>
+                    </div>
+                </div>
+                <div class="item" id="item3">
+                    <img src="https://plus.unsplash.com/premium_photo-1661342486992-2a08d4b466ef?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="content">
+                    <h2 class="title">Essential Services</h2>
+                    <p class="topic">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula interdum lectus, at condimentum justo sodales sit amet. Integer lacinia, felis quis blandit volutpat, velit sapien posuere velit, sed viverra purus sapien a enim. Vestibulum nisl sem, ornare at augue in, eleifend rhoncus sapien. Vestibulum malesuada tincidunt felis, et facilisis elit. Sed dapibus rutrum condimentum. Ut et ex mattis turpis congue hendrerit. Sed tristique nibh sit amet laoreet viverra.</p >
+                    <button class="buttons">Subscribe</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="thumbnail">
+                <div class="item" id="link1">
+                    <img src="https://images.unsplash.com/photo-1719937050814-72892488f741?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="content">
+                    <div class="title">
+                        Order Food
+                    </div>
+                    </div>
+                </div>
+                <div class="item" id="link2">
+                    <img src="https://plus.unsplash.com/premium_photo-1682146662576-900a71864a11?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="content">
+                    <div class="title">
+                        Consult Doctor
+                    </div>
+                    </div>
+                </div>
+                <div class="item" id="link3">
+                    <img src="https://plus.unsplash.com/premium_photo-1661342486992-2a08d4b466ef?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="content">
+                    <div class="title">
+                        Essential Services
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </section>
+        </main>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const links = document.querySelectorAll('.thumbnail .item');
+            function handleClick(event) {
+            // Prevent default behavior if needed (e.g., for anchor tags)
+                event.preventDefault();
+
+                // Get the ID of the clicked link (e.g., 'link1')
+                const clickedLinkId = event.currentTarget.id;
+
+                // Determine the corresponding item ID (e.g., 'item1' for 'link1')
+                const correspondingItemId = clickedLinkId.replace('link', 'item');
+
+                // Select the corresponding item using the generated ID
+                const correspondingItem = document.querySelector(`#${correspondingItemId}`);
+
+                // Remove 'chosen' class from all items
+                document.querySelectorAll('.item').forEach(item => item.classList.remove('chosen'));
+
+                // Add the 'chosen' class to the corresponding item
+                correspondingItem.classList.add('chosen');
+
+                // Move the chosen item to the first position in the list
+                const parentContainer = correspondingItem.parentNode;
+                parentContainer.insertBefore(correspondingItem, parentContainer.firstChild);
+            }
+            links.forEach(link => {
+                link.addEventListener('click', handleClick);
+            });
+
+        </script>
+    </body>
+</html>
