@@ -1,13 +1,9 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 import random
-from django.db import models
-from django.contrib.auth.models import User
-import random
+
 
 class EmailVerificationCode(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
