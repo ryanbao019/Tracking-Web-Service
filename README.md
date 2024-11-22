@@ -69,8 +69,8 @@ python3 manage.py migrate service
 Start the server using the following command:
 python3 manage.py runserver_plus --cert-file certificate.crt --key-file private.key
 
-##Success
+## Success
 Once the steps are complete, the web app should be successfully configured and running on your system. Enjoy exploring the Web-Map Searching App!
 
-##License
+## License
 This project is licensed under [Your License]. Replace with the applicable license details.
