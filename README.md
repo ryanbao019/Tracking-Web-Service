@@ -25,7 +25,8 @@ Site Map for Web application,
 
 
 
-Web-Map Searching App
+# AspNetCore.Diagnostics.HealthChecks
+
 This is an online web application developed using the Django framework. It is built with Python and MySQL. Follow the steps below to configure and run the app on your system.
 
 Prerequisites
