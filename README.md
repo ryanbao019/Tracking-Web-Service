@@ -43,11 +43,9 @@ Install Python and Django on your system.
 Install any required Django extensions.
 3. Prepare for Migrations
 Remove the default migration files with the following commands:
-
-bash
-Copy code
 rm loginapp/migrations/0*.py
 rm service/migrations/0*.py
+
 4. Update Database Configuration
 Update the DATABASES section in the settings.py file with your MySQL database details to link the app to your database.
 
