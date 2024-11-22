@@ -43,7 +43,9 @@ Install Python and Django on your system.
 Install any required Django extensions.
 3. Prepare for Migrations
 Remove the default migration files with the following commands:
+
 rm loginapp/migrations/0*.py
+
 rm service/migrations/0*.py
 
 4. Update Database Configuration
@@ -51,20 +53,30 @@ Update the DATABASES section in the settings.py file with your MySQL database de
 
 5. Create Fresh Migrations
 Run the following commands to create fresh migrations:
+
 python3 manage.py makemigrations loginapp
+
 python3 manage.py makemigrations service
 
 6. Apply Migrations in Order
 Apply the migrations in the specified order:
+
 python3 manage.py migrate contenttypes
+
 python3 manage.py migrate auth
+
 python3 manage.py migrate admin
+
 python3 manage.py migrate sessions
+
 python3 manage.py migrate loginapp
+
 python3 manage.py migrate service
+
 
 7. Run the Server
 Start the server using the following command:
+
 python3 manage.py runserver_plus --cert-file certificate.crt --key-file private.key
 
 ## Success
