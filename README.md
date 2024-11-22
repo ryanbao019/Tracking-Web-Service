@@ -53,30 +53,24 @@ Update the DATABASES section in the settings.py file with your MySQL database de
 
 5. Create Fresh Migrations
 Run the following commands to create fresh migrations:
-
-bash
-Copy code
 python3 manage.py makemigrations loginapp
 python3 manage.py makemigrations service
+
 6. Apply Migrations in Order
 Apply the migrations in the specified order:
-
-bash
-Copy code
 python3 manage.py migrate contenttypes
 python3 manage.py migrate auth
 python3 manage.py migrate admin
 python3 manage.py migrate sessions
 python3 manage.py migrate loginapp
 python3 manage.py migrate service
+
 7. Run the Server
 Start the server using the following command:
-
-bash
-Copy code
 python3 manage.py runserver_plus --cert-file certificate.crt --key-file private.key
-Success
+
+##Success
 Once the steps are complete, the web app should be successfully configured and running on your system. Enjoy exploring the Web-Map Searching App!
 
-License
+##License
 This project is licensed under [Your License]. Replace with the applicable license details.
