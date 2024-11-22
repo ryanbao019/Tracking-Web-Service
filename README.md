@@ -21,3 +21,5 @@ Site Map for Web application,
 3.1.3Provide the past three days' location
 3.2Allow to Locate
 3.2.1Create the safest travel route back home or to the nearest hotel
+
+
