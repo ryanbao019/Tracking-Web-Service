@@ -23,3 +23,59 @@ Site Map for Web application,
 3.2.1Create the safest travel route back home or to the nearest hotel
 
 
+
+
+Web-Map Searching App
+This is an online web application developed using the Django framework. It is built with Python and MySQL. Follow the steps below to configure and run the app on your system.
+
+Prerequisites
+Python
+Django
+MySQL
+mysqlclient Python package
+Setup Instructions
+1. Build and Configure the Database
+Install MySQL and the mysqlclient Python package.
+Create a MySQL database for the app.
+2. Install Dependencies
+Install Python and Django on your system.
+Install any required Django extensions.
+3. Prepare for Migrations
+Remove the default migration files with the following commands:
+
+bash
+Copy code
+rm loginapp/migrations/0*.py
+rm service/migrations/0*.py
+4. Update Database Configuration
+Update the DATABASES section in the settings.py file with your MySQL database details to link the app to your database.
+
+5. Create Fresh Migrations
+Run the following commands to create fresh migrations:
+
+bash
+Copy code
+python3 manage.py makemigrations loginapp
+python3 manage.py makemigrations service
+6. Apply Migrations in Order
+Apply the migrations in the specified order:
+
+bash
+Copy code
+python3 manage.py migrate contenttypes
+python3 manage.py migrate auth
+python3 manage.py migrate admin
+python3 manage.py migrate sessions
+python3 manage.py migrate loginapp
+python3 manage.py migrate service
+7. Run the Server
+Start the server using the following command:
+
+bash
+Copy code
+python3 manage.py runserver_plus --cert-file certificate.crt --key-file private.key
+Success
+Once the steps are complete, the web app should be successfully configured and running on your system. Enjoy exploring the Web-Map Searching App!
+
+License
+This project is licensed under [Your License]. Replace with the applicable license details.
